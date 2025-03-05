@@ -1,0 +1,230 @@
+<div class="donation-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Faire un don</mat-card-title>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <form [formGroup]="donationForm" >
+
+          <div class="donation-type-section">
+            <h3>Choisir le type de don</h3>
+            <mat-button-toggle-group formControlName="donation_type">
+              <mat-button-toggle *ngFor="let type of donationTypes" [value]="type.value">
+                {{type.label}}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+  
+            <mat-form-field appearance="outline" class="full-width" 
+                          *ngIf="donationForm.get('donationType')?.value === 'regular'">
+              <mat-label>Frequency</mat-label>
+              <mat-select formControlName="frequency">
+                <mat-option *ngFor="let freq of frequencies" [value]="freq.value">
+                  {{freq.label}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+  
+         
+  
+
+<div class="causes-section">
+    <h3>Choisir une cause</h3>
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let category of categories">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{category.category}}</mat-panel-title>
+        </mat-expansion-panel-header>
+  
+        <div class="cause-options">
+            <ng-container *ngFor="let option of category.options">
+                <div class="checkbox-row">
+                    <mat-checkbox 
+                      [(ngModel)]="selectedCauses[option.id].isSelected"
+                      [ngModelOptions]="{standalone: true}">
+                      {{option.name}}
+                    </mat-checkbox>
+                    <div class="amount-controls" *ngIf="selectedCauses[option.id].isSelected">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Montant (€)</mat-label>
+                        <input matInput 
+       type="number"
+       [(ngModel)]="selectedCauses[option.id].amount"
+       [ngModelOptions]="{standalone: true}"
+       [min]="option.amount"
+       [readonly]="option.amount > 0"
+       step="any"
+       [matTooltip]="option.amount > 0 ? 'Fixed amount: ' + option.amount + '€' : ''"
+       [matTooltipPosition]="'above'"
+       (ngModelChange)="updateCauseAmount(option.id, $event)">
+                        
+                        <span matSuffix>€</span>
+                      </mat-form-field>
+                  
+                      <mat-form-field *ngIf="option.amount > 0" appearance="outline" class="quantity-field">
+                        <mat-label>Quantité</mat-label>
+                        <input matInput 
+                               type="number"
+                               [(ngModel)]="selectedCauses[option.id].quantity"
+                               [ngModelOptions]="{standalone: true}"
+                               min="1"
+                               (ngModelChange)="updateQuantity(option.id, $event)"
+                               step="1">
+                      </mat-form-field>
+                    </div>
+                  </div>
+            </ng-container>
+          </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  
+    <div class="total-amount">
+      Total de dons: {{getTotalAmount()}}€
+    </div>
+  </div>
+  
+  
+          <div class="personal-info-section" formGroupName="donor">
+            <h3>Informations personnelles</h3>
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Prénom </mat-label>
+                <input matInput formControlName="first_name">
+                <mat-error *ngIf="donationForm.get('donor.first_name')?.errors?.['required']">
+                  First name is required
+                </mat-error>
+                
+              </mat-form-field>
+  
+              <mat-form-field appearance="outline">
+                <mat-label>Nom </mat-label>
+                <input matInput formControlName="last_name">
+                <mat-error *ngIf="donationForm.get('donor.last_name')?.errors?.['required']">
+                  Last name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+  
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email">
+              <mat-error *ngIf="donationForm.get('donor.email')?.errors?.['required']">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="donationForm.get('donor.email')?.errors?.['email']">
+                Please enter a valid email
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phone_number" placeholder="+33 123456789">
+              <mat-error *ngIf="donationForm.get('donor.phone_number')?.errors?.['required']">
+                Phone number is required
+              </mat-error>
+              <mat-error *ngIf="donationForm.get('phone_number')?.errors?.['pattern']">
+                Please enter a valid phone number
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address">
+              <mat-error *ngIf="donationForm.get('donor.address')?.errors?.['required']">
+                Address is required
+              </mat-error>
+            </mat-form-field>
+  
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city">
+                <mat-error *ngIf="donationForm.get('donor.city')?.errors?.['required']">
+                  City is required
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field appearance="outline">
+                <mat-label>Postal Code</mat-label>
+                <input matInput formControlName="postal_code">
+                <mat-error *ngIf="donationForm.get('donor.postal_code')?.errors?.['required']">
+                  Postal code is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+  
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country">
+              <mat-error *ngIf="donationForm.get('donor.country')?.errors?.['required']">
+                Country is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+<!--   
+          <div class="additional-options">
+            <mat-checkbox formControlName="taxReceipt">
+              I would like to receive a tax receipt
+            </mat-checkbox>
+  
+            <mat-checkbox formControlName="acceptTerms" class="terms-checkbox">
+              I accept the terms and conditions
+            </mat-checkbox>
+          </div> -->
+        
+          <!-- Add this after your existing donation fields -->
+<div class="payment-section">
+  <h3>Payment Method</h3>
+  
+  <mat-radio-group formControlName="payment_method" (change)="onPaymentMethodChange($event.value)">
+    <mat-radio-button *ngFor="let method of paymentMethods" [value]="method.value">
+      {{method.label}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <div *ngIf="donationForm.get('payment_method')?.value === 'sepa'" class="sepa-form" formGroupName="donor">
+    <mat-form-field appearance="outline">
+      <mat-label>Account Holder Name</mat-label>
+      <input matInput formControlName="account_holder" placeholder="John Doe">
+      <mat-error *ngIf="donationForm.get('account_holder')?.invalid">
+        
+        {{getAccountHolderErrorMessage()}}
+      </mat-error>
+      <mat-hint>Enter the name exactly as it appears on your bank account</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>IBAN</mat-label>
+      <input matInput 
+             formControlName="iban" 
+             placeholder="DE89 3704 0044 0532 0130 00"
+             (input)="onIbanInput($event)">
+      <mat-error *ngIf="donationForm.get('iban')?.invalid">
+        {{getIbanErrorMessage()}}
+      </mat-error>
+      <mat-hint>Enter your IBAN without spaces</mat-hint>
+    </mat-form-field>
+    <div class="sepa-mandate">
+      <p>By providing your IBAN and confirming this payment, you authorize our organization to send instructions to your bank to debit your account.</p>
+    </div>
+  </div>
+</div>
+          <button mat-raised-button color="primary" 
+        class="submit-button" 
+        (click)="submitDonation()"
+        
+        
+        [disabled]="donationForm.valid || getTotalAmount() <= 0">
+  Proceed to Payment
+</button>
+          <!-- <button mat-raised-button color="primary" 
+          class="submit-button" 
+          type="submit"
+          [disabled]="!donationForm.valid">
+    <ng-container >
+      {{ donationForm.get('donationType')?.value === 'one-time' ? 'Complete Donation' : 'Start Regular Donation' }}
+    </ng-container>
+  </button> -->
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>

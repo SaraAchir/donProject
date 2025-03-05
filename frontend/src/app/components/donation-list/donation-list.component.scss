@@ -1,0 +1,28 @@
+.donations-container {
+    padding: 20px;
+    margin: 20px;
+  
+    .mat-form-field {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .table-container {
+      overflow-x: auto;
+    }
+  
+    table {
+      width: 100%;
+    }
+  
+    .mat-column-payment_status {
+      .mat-chip-list {
+        display: flex;
+        justify-content: start;
+      }
+    }
+  
+    .mat-column-total_amount {
+      font-weight: bold;
+    }
+  }

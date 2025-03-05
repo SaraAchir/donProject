@@ -1,0 +1,35 @@
+# Backend
+/backend/venv/
+/backend/__pycache__/
+/backend/*.pyc
+/backend/.env
+/backend/db.sqlite3
+/backend/media/
+/backend/static/
+/backend/*.log
+/backend/backend/settings.py
+
+# Frontend
+/frontend/node_modules/
+/frontend/.env
+/frontend/dist/
+/frontend/.angular/
+/frontend/coverage/
+/frontend/npm-debug.log*
+/frontend/src/index.html
+
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Secrets and configurations
+*.pem
+*.key
+*.crt
+secrets.json
+config.json
+stripe_config.json
+paypal_config.json
