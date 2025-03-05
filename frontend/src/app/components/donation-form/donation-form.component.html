@@ -1,4 +1,5 @@
 <div class="donation-container">
+  <app-loading-overlay *ngIf="isFullScreenLoading"></app-loading-overlay>
     <mat-card>
       <mat-card-header>
         <mat-card-title>Faire un don</mat-card-title>
@@ -6,7 +7,10 @@
   
       <mat-card-content>
         <form [formGroup]="donationForm" >
-
+          
+         
+            <!-- existing form content -->
+          
           <div class="donation-type-section">
             <h3>Choisir le type de don</h3>
             <mat-button-toggle-group formControlName="donation_type">
@@ -208,14 +212,12 @@
     </div>
   </div>
 </div>
-          <button mat-raised-button color="primary" 
-        class="submit-button" 
-        (click)="submitDonation()"
-        
-        
-        [disabled]="donationForm.valid || getTotalAmount() <= 0">
-  Proceed to Payment
+<button mat-raised-button color="primary"  class="submit-button" 
+(click)="submitDonation()" [disabled]="isLoading">
+  <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+  <span>Submit Donation</span>
 </button>
+         
           <!-- <button mat-raised-button color="primary" 
           class="submit-button" 
           type="submit"

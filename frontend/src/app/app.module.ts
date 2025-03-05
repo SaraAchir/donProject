@@ -32,6 +32,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DonationListComponent } from './components/donation-list/donation-list.component';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
+import { LoadingSpinnerComponent } from './components/shared/loading-spinner/loading-spinner.component';
+import { LoadingOverlayComponent } from './components/shared/loading-overlay/loading-overlay.component';
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import { PaymentSuccessComponent } from './components/payment-success/payment-su
     DonationFormComponent,
     DonationListComponent,
     PaymentSuccessComponent,
+    LoadingSpinnerComponent,
+    LoadingOverlayComponent
    
   ],
   imports: [

@@ -112,6 +112,7 @@ export class DonationFormComponent implements OnInit, OnDestroy {
 
   causes: any[] = [];
   isLoading = false;
+  isFullScreenLoading = false;
 
   constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
     private donationApiService: DonationApiService, private router:Router) {
@@ -396,11 +397,13 @@ export class DonationFormComponent implements OnInit, OnDestroy {
    
     
     if (this.donationForm) {
-      this.isLoading = true;
+      this.isLoading = true; // Pour le spinner du bouton
+      this.isFullScreenLoading = true; // Pour l'overlay
       this.donationApiService.createDonation(data).subscribe({
         next: (response) => {
           if (response.payment.status === 'success') {
             if (response.payment.payment_method === 'paypal') {
+              this.isFullScreenLoading = true; // Garde l'overlay pendant la redirection PayPal
               console.log("haaaaaaaaaaaah")
               // Redirect to PayPal
               window.location.href = response.payment.approval_url;
@@ -417,6 +420,7 @@ export class DonationFormComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           this.isLoading = false;
+          this.isFullScreenLoading = false;
           console.error('Payment error:', error);
           // Handle error
         },
