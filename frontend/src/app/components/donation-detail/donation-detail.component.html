@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>Donation Details</h2>
+<mat-dialog-content>
+  <div class="details-container">
+    <!-- Basic Information -->
+    <div class="detail-item">
+      <h3>Date</h3>
+      <p>{{data.created_at | date:'medium'}}</p>
+    </div>
+    <mat-divider></mat-divider>
+
+    <!-- Additional Information not shown in table -->
+    <div class="detail-item">
+      <h3>Donor Information</h3>
+      <p>Name: {{data.donor?.first_name}} {{data.donor?.last_name}}</p>
+      <p>Email: {{data.donor?.email}}</p>
+      <p>Phone: {{data.donor?.phone_number}}</p>
+      <p>Address: {{data.donor?.address}}, {{data.donor?.city}}</p>
+      <p>Postal Code: {{data.donor?.postal_code}}</p>
+      <p>Country: {{data.donor?.country}}</p>
+    </div>
+    <mat-divider></mat-divider>
+
+    <!-- Donation Causes -->
+    <div class="detail-item">
+      <h3>Donation Causes</h3>
+      <div *ngFor="let detail of data.donation_details" class="cause-item">
+        <p>Cause: {{detail.cause_name}}</p>
+        <p>Amount: €{{detail.amount}}</p>
+        <p>Quantity: {{detail.quantity}}</p>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+
+    <!-- Payment Information -->
+    <div class="detail-item">
+      <h3>Payment Information</h3>
+      <p>Method: {{data.payment_method | titlecase}}</p>
+      <p>Status: 
+        <mat-chip-set>
+          <mat-chip [color]="data.payment_status === 'completed' ? 'primary' : 'warn'">
+            {{data.payment_status}}
+          </mat-chip>
+        </mat-chip-set>
+      </p>
+      <p>Total Amount: €{{data.total_amount}}</p>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

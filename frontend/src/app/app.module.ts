@@ -34,7 +34,10 @@ import { DonationListComponent } from './components/donation-list/donation-list.
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { LoadingSpinnerComponent } from './components/shared/loading-spinner/loading-spinner.component';
 import { LoadingOverlayComponent } from './components/shared/loading-overlay/loading-overlay.component';
-
+import { HeaderComponent } from './components/header/header.component';
+import { DonationDetailComponent } from './components/donation-detail/donation-detail.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,9 @@ import { LoadingOverlayComponent } from './components/shared/loading-overlay/loa
     DonationListComponent,
     PaymentSuccessComponent,
     LoadingSpinnerComponent,
-    LoadingOverlayComponent
+    LoadingOverlayComponent,
+    HeaderComponent,
+    DonationDetailComponent
    
   ],
   imports: [
@@ -77,7 +82,9 @@ import { LoadingOverlayComponent } from './components/shared/loading-overlay/loa
     MatSortModule,
     MatRadioModule,
     MatProgressSpinnerModule,
-    CommonModule
+    CommonModule,
+    MatDividerModule,
+    MatTabsModule
     
    
   ],

@@ -52,55 +52,55 @@ export class DonationFormComponent implements OnInit, OnDestroy {
     {
       category: "Aider l'association à exister",
       options: [
-        { id: '1', name: 'Adhésion annuelle (montant libre à partir de 10€)', amount: 15 },
-        { id: '2', name: "Soutenir l'association", amount: 0 }
+        { id: '1', name: 'Adhésion annuelle (montant libre à partir de 10€)', amount: 10 ,showQuantity :false},
+        { id: '2', name: "Soutenir l'association", amount: 0,showQuantity :false }
       ]
     },
     {
       category: 'Ramadan',
       options: [
-        { id: '5', name: 'Offrir un colis alimentaire spécial ramadan aux démunis du Maroc (30 € ou montant libre)', amount: 30 },
-        { id: '6', name: 'Pack ramadan (230 € pour un puits au Nepal + 5 arbres fruitiers + 3 kits scolaires)', amount: 250 },
-        { id: '7', name: ' Iftars Maroc (montant libre)', amount: 0 }
+        { id: '5', name: 'Offrir un colis alimentaire spécial ramadan aux démunis du Maroc (30 € ou montant libre)', amount: 30 ,showQuantity :false},
+        { id: '6', name: 'Pack ramadan (230 € pour un puits au Nepal + 5 arbres fruitiers + 3 kits scolaires)', amount: 250 ,showQuantity :true},
+        { id: '7', name: ' Iftars Maroc (montant libre)', amount: 0,showQuantity :false }
       ]
     },
     {
       category: 'Aider les orphelins',
       options: [
-        { id: '8', name: 'Parrainer un orphelin au Maroc (20 € mensuel / option "Opter pour un don tous les mois" à cocher)', amount: 20 },
-        { id: '9', name: 'Caisse pour les veuves et orphelins du Maroc', amount: 0 },
-        { id: '10', name: "Participer à la construction d'un orphelinat au Maroc", amount: 0 }
+        { id: '8', name: 'Parrainer un orphelin au Maroc (20 € mensuel / option "Opter pour un don tous les mois" à cocher)', amount: 20 ,showQuantity :true},
+        { id: '9', name: 'Caisse pour les veuves et orphelins du Maroc', amount: 0 ,showQuantity :false},
+        { id: '10', name: "Participer à la construction d'un orphelinat au Maroc", amount: 0,showQuantity :false }
       ]
     },
     {
       category: "Prendre en charge entièrement la construction d'un puit pour une vingtaine de famille",
       options: [
-        { id: '11', name: "construction d'un puit au Nepal (160€)", amount: 160 },
-        { id: '12', name: "construction d'un puit au Bangladesh (165€)", amount: 165 },
-        { id: '13', name: " construction d'un puit au Sri Lanka (185€)", amount: 185 },
-        { id: '14', name: "construction d'un puit au Burma (215€)", amount: 215 }
+        { id: '11', name: "construction d'un puit au Nepal (160€)", amount: 160 ,showQuantity :true},
+        { id: '12', name: "construction d'un puit au Bangladesh (165€)", amount: 165,showQuantity :true },
+        { id: '13', name: " construction d'un puit au Sri Lanka (185€)", amount: 185 ,showQuantity :true},
+        { id: '14', name: "construction d'un puit au Burma (215€)", amount: 215 ,showQuantity :true}
       ]
     },
     {
       category: "Prendre en charge entièrement la construction d'un puits pour un village",
       options: [
-        { id: '15', name: '  au Niger (720 € dont 10 € de frais de transaction)', amount: 766 },
-        { id: '16', name: ' au Bangladesh (771 € dont 11 € de frais de transaction)', amount: 782 },
-        { id: '17', name: '  au Cameroun (1520 € dont 20 € de frais de transaction))', amount: 1540 }
+        { id: '15', name: '  au Niger (720 € dont 10 € de frais de transaction)', amount: 766,showQuantity :true },
+        { id: '16', name: ' au Bangladesh (771 € dont 11 € de frais de transaction)', amount: 782,showQuantity :true },
+        { id: '17', name: '  au Cameroun (1520 € dont 20 € de frais de transaction))', amount: 1540,showQuantity :true }
       ]
     },
     {
       category: "Participer à la construction d'un puits (montant libre)",
       options: [
-        { id: '18', name: "Je participe à la construction d'un puits", amount: 0 },
+        { id: '18', name: "Je participe à la construction d'un puits", amount: 0 ,showQuantity :false},
       ]
     }
       ,
     {
       category: 'Autres causes',
       options: [
-        { id: '18', name: 'Donner pour les urgences médicales au Maroc', amount: 0 },
-        { id: '19', name: 'Participation pour les maraudes dans les hôtels sociaux', amount: 0 }
+        { id: '18', name: 'Donner pour les urgences médicales au Maroc', amount: 0,showQuantity :false },
+        { id: '19', name: 'Participation pour les maraudes dans les hôtels sociaux', amount: 0,showQuantity :false }
       ]
     }
 

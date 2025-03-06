@@ -49,7 +49,9 @@
         </ng-container>
   
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+        (click)="openDonationDetails(row)"
+        class="donation-row">
       </table>
   
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of donations"></mat-paginator>

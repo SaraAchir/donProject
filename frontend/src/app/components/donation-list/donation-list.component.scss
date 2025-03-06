@@ -25,4 +25,10 @@
     .mat-column-total_amount {
       font-weight: bold;
     }
+    .donation-row {
+      cursor: pointer;
+      &:hover {
+        background: rgba(0,0,0,.04);
+      }
+    }
   }

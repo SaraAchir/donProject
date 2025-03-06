@@ -66,7 +66,7 @@
                         <span matSuffix>€</span>
                       </mat-form-field>
                   
-                      <mat-form-field *ngIf="option.amount > 0" appearance="outline" class="quantity-field">
+                      <mat-form-field *ngIf=option.showQuantity appearance="outline" class="quantity-field">
                         <mat-label>Quantité</mat-label>
                         <input matInput 
                                type="number"
