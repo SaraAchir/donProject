@@ -1,5 +1,7 @@
 from django.db import models
 
+from backend import settings
+
 class CauseCategory(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
@@ -18,6 +20,13 @@ class Cause(models.Model):
         return f"{self.name} ({self.category.name})"
 
 class Donor(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='donor_profile',
+         null=True, 
+         blank=True
+    )
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -78,3 +87,5 @@ class DonationDetail(models.Model):
 
     def __str__(self):
         return f"{self.cause.name} - {self.quantity} x {self.amount}"  
+
+    

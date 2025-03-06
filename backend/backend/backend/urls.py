@@ -16,8 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+
+from donations.views import CauseCategoryViewSet, CauseViewSet, DonationViewSet, DonorViewSet
+router = DefaultRouter()
+router.register(r'cause-categories', CauseCategoryViewSet, basename='cause-category')
+router.register(r'causes', CauseViewSet, basename='cause')
+router.register(r'donors', DonorViewSet, basename='donor')
+router.register(r'donations', DonationViewSet, basename='donation')
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('donations.urls')),
+    path('api/', include(router.urls)),
+    path('api/auth/', include('users.urls')), 
+     path('api/users/', include('users.urls')) # Si vous avez des URLs d'authentification
 ]
+
 

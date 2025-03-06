@@ -31,7 +31,7 @@ export class DonationListComponent implements OnInit {
     });
   }
   loadDonations() {
-    this.donationService.getUserDonations().subscribe({
+    this.donationService.getDonations().subscribe({
       next: (data) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;

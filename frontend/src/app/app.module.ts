@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 import { NgModule } from '@angular/core';
@@ -38,6 +38,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { DonationDetailComponent } from './components/donation-detail/donation-detail.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { LoginComponent } from './components/login/login.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     LoadingSpinnerComponent,
     LoadingOverlayComponent,
     HeaderComponent,
-    DonationDetailComponent
+    DonationDetailComponent,
+    LoginComponent
    
   ],
   imports: [
@@ -89,7 +93,8 @@ import { MatTabsModule } from '@angular/material/tabs';
    
   ],
   providers: [
-    provideClientHydration(withEventReplay()),
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -31,24 +31,27 @@ class DonationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Donation
-        fields = ['id', 'donor', 'donation_type', 'payment_method', 'frequency', 
+        fields = ['id', 'donor', 'donation_type', 'payment_method', 'frequency',
                  'created_at', 'payment_status', 'donation_details', 'total_amount'
             ]
 
     def create(self, validated_data):
+        request = self.context.get('request')
         donor_data = validated_data.pop('donor')
         donation_details_data = validated_data.pop('donation_details')
-        # Create or update donor
-        donor = Donor.objects.filter(email=donor_data['email']).first()
-        
-        if donor:
-            # Update existing donor
+         # Utiliser le donateur existant ou en créer un nouveau
+        donor = Donor.objects.filter(user=request.user).first()
+        if not donor:
+            donor = Donor.objects.create(
+                user=request.user,
+                **donor_data
+            )
+        else:
+            # Mettre à jour les informations du donateur si nécessaire
             for key, value in donor_data.items():
                 setattr(donor, key, value)
             donor.save()
-        else:
-            # Create new donor
-            donor = Donor.objects.create(**donor_data)
+     
 
         donation = Donation.objects.create(
             donor=donor,
@@ -61,3 +64,4 @@ class DonationSerializer(serializers.ModelSerializer):
             DonationDetail.objects.create(donation=donation, **detail_data)
         
         return donation
+

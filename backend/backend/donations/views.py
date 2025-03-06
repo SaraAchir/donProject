@@ -3,14 +3,26 @@ from rest_framework.response import Response
 from .models import Donation, Cause, CauseCategory, Donor
 from .serializers import DonationSerializer, CauseSerializer, CauseCategorySerializer, DonorSerializer
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from .services import PaymentProcessor
 class CauseCategoryViewSet(viewsets.ModelViewSet):
     queryset = CauseCategory.objects.all()
     serializer_class = CauseCategorySerializer
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
 
 class CauseViewSet(viewsets.ModelViewSet):
-    queryset = Cause.objects.filter(active=True)
     serializer_class = CauseSerializer
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
 
     def get_queryset(self):
         queryset = Cause.objects.filter(active=True)
@@ -18,16 +30,36 @@ class CauseViewSet(viewsets.ModelViewSet):
         if category is not None:
             queryset = queryset.filter(category_id=category)
         return queryset
+    
 
 class DonorViewSet(viewsets.ModelViewSet):
-    queryset = Donor.objects.all()
     serializer_class = DonorSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Donor.objects.all()
+        return Donor.objects.filter(user=self.request.user)
 
 class DonationViewSet(viewsets.ModelViewSet):
     queryset = Donation.objects.all()
     serializer_class = DonationSerializer
     payment_processor = PaymentProcessor()
-
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Donation.objects.all()
+        return Donation.objects.filter(donor__user=self.request.user)
+    def perform_create(self, serializer):
+            # Vérifier si un donateur existe déjà pour cet utilisateur
+            donor = Donor.objects.filter(user=self.request.user).first()
+            if not donor:
+                # Créer un nouveau donateur si nécessaire
+                donor = Donor.objects.create(
+                    user=self.request.user,
+                    email=self.request.user.email
+                )
+            serializer.save(donor=donor)
+    
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -97,6 +129,8 @@ class DonationViewSet(viewsets.ModelViewSet):
         donations = Donation.objects.all().order_by('-created_at')
         serializer = self.get_serializer(donations, many=True)
         return Response(serializer.data)
+    
+    
 
 
 
